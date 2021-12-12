@@ -1,63 +1,52 @@
-# from django.shortcuts import render
+# Importing Modules
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 from django.http.response import JsonResponse
 
-from .models import Contact
-from .serializers import ContactSerializer
+# Importing Models and Serializers
+from .models import Member
+from .serializers import MemberSerializer
 
-from django.core.mail import send_mail
 
-
-def getAscinding(model_objs: list[Contact]):
+def getAscinding(model_objs: list[Member]):
     model_class = type(model_objs[0])
 
-    if model_class == Contact:
-        indexes = [obj.Sno for obj in model_objs]
+    if model_class == Member:
+        indexes = [obj.Id for obj in model_objs]
         indexes.sort()
-        return [model_objs.filter(Sno=sno).first() for sno in indexes]
+        return [model_objs.filter(Id=id).first() for id in indexes]
 
 
 # Create your views here.
-@csrf_exempt
-def contactApi(request, sno=0):
+@ csrf_exempt
+def memberApi(request, id=0):
     if request.method == 'GET':
-        if sno:
-            contacts = Contact.objects.filter(Sno=sno)
+        if id:
+            members = Member.objects.filter(Id=id)
         else:
-            contacts = getAscinding(Contact.objects.all())
-        contacts_serializer = ContactSerializer(contacts, many=True)
-        return JsonResponse(contacts_serializer.data, safe=False)
+            members = getAscinding(Member.objects.all())
+        members_serializer = MemberSerializer(members, many=True)
+        return JsonResponse(members_serializer.data, safe=False)
 
     elif request.method == 'POST':
-        contact_data = JSONParser().parse(request)
-        contacts_serializer = ContactSerializer(data=contact_data)
-        if contacts_serializer.is_valid():
-            # Sending Email
-            send_mail(
-                f"Message by - {contact_data['Name']}",  # Subject
-                contact_data['Message'],  # Message
-                contact_data['Email'],  # From Email
-                [contact_data['Message'], ] # + [member.Email for member in Member.objects.filter(
-                    # Membership='admin').all()]  # To Mail(s)
-            )
-            #
-            # contacts_serializer.save()
-            return JsonResponse("Sent Successfully", safe=False)
-        return JsonResponse("Failed to Send", safe=False)
+        member_data = JSONParser().parse(request)
+        members_serializer = MemberSerializer(data=member_data)
+        if members_serializer.is_valid():
+            members_serializer.save()
+            return JsonResponse("Added Successfully", safe=False)
+        return JsonResponse("Failed to Add", safe=False)
 
     elif request.method == 'PUT':
-        contact_data = JSONParser().parse(request)
-        contact = Contact.objects.get(
-            Sno=contact_data['Sno'])
-        contacts_serializer = ContactSerializer(
-            contact, data=contact_data)
-        if contacts_serializer.is_valid():
-            contacts_serializer.save()
+        member_data = JSONParser().parse(request)
+        member = Member.objects.get(
+            Id=member_data['Id'])
+        members_serializer = MemberSerializer(member, data=member_data)
+        if members_serializer.is_valid():
+            members_serializer.save()
             return JsonResponse("Updated Successfully", safe=False)
         return JsonResponse("Failed to Update")
 
     elif request.method == 'DELETE':
-        contact = Contact.objects.get(sno=sno)
-        contact.delete()
+        member = Member.objects.get(Id=id)
+        member.delete()
         return JsonResponse("Deleted Successfully", safe=False)

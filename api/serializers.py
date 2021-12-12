@@ -1,9 +1,13 @@
 from rest_framework import serializers
-from .models import Contact
+from .models import Member
 
 
-class ContactSerializer(serializers.ModelSerializer):
+class MemberSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Contact
-        fields = ('Sno', 'Name', 'Email', 'Message', 'DateSent')
+        model = Member
+        fields = (
+            'Id', 'Name', 'Membership', 'ExperianceType',
+            'Email', 'DateOfJoining', 'PhotoFile',
+            'KnownLanguages', 'BooksWritten', 'WorkingHours', 'Projects', 'About'
+        )
 
