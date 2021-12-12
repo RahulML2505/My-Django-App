@@ -150,3 +150,17 @@ A demo Django application with cheat sheet.
     def api(request):
         return JsonResponse("ok", safe=False)
     ```
+- Create a `templates`:
+
+  - make [`templates`](./frontend/templates/) folder under `frontend/` and add a `index.html` file
+
+    ```bash
+    $ mkdir frontend/templates
+    $ touch frontend/templates/index.html
+    ```
+
+  - write [`index.html`](./frontend/templates/index.html)
+
+    ```html
+    
+    ```
