@@ -159,7 +159,7 @@ A demo Django application with cheat sheet.
     $ touch frontend/templates/index.html
     ```
 
-  - write [`index.html`](./frontend/templates/index.html)
+  - write a simple `html` page in [`index.html`](./frontend/templates/index.html)
 
     ```html
     <!DOCTYPE html>
