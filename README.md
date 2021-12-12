@@ -1,5 +1,7 @@
 # My-Django-App
 
+A demo Django application with cheat sheet.
+
 ## Getting Started
 
 - Install Python:
