@@ -134,7 +134,7 @@ A demo Django application with cheat sheet.
     ```python
     # Create your views here.
     def index(request, *args, **kwargs):
-        return render(request, 'index.html', {'title': 'cloutcoders'})
+        return render(request, 'index.html', {'title': 'My-Django-App'})
     ```
 
   - open [`api/views.py`](./frontend/views.py):
