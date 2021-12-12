@@ -119,7 +119,7 @@
   ]
   ```
 
-- Add a view to `frontend` and `api`:
+- Add views to `frontend` and `api`:
 
   - open [`frontend/views.py`](./frontend/views.py):
 
