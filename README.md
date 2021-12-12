@@ -139,7 +139,7 @@ A demo Django application with cheat sheet.
 
   - open [`api/views.py`](./frontend/views.py):
 
-    import `render` from `django.shortcuts`
+    import `JsonResponse` from `django.http.response`
 
     ```python
     from django.http.response import JsonResponse
